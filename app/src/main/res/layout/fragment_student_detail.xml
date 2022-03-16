@@ -8,7 +8,7 @@
     tools:context=".view.StudentDetailFragment" >
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageStudentDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toBottomOf="@+id/imageStudentDetail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editID"
@@ -97,4 +97,14 @@
         android:text="Update"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+
+    <ProgressBar
+        android:id="@+id/progressLoadDetailStudent"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/imageStudentDetail"
+        app:layout_constraintEnd_toEndOf="@+id/imageStudentDetail"
+        app:layout_constraintStart_toStartOf="@+id/imageStudentDetail"
+        app:layout_constraintTop_toTopOf="@+id/imageStudentDetail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

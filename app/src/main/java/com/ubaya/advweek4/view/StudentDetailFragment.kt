@@ -9,15 +9,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ubaya.advweek4.R
 import com.ubaya.advweek4.model.Student
+import com.ubaya.advweek4.util.loadImage
 import com.ubaya.advweek4.viewmodel.DetailViewModel
 import com.ubaya.advweek4.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_student_detail.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
+import kotlinx.android.synthetic.main.student_list_item.*
+import kotlinx.android.synthetic.main.student_list_item.view.*
 
 class StudentDetailFragment : Fragment() {
     private lateinit var  viewModel: DetailViewModel
-    private val studentListAdapter = StudentListAdapter(arrayListOf())
-    private lateinit var arrStudent : Student
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,22 +28,25 @@ class StudentDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var studentId : String? = "test"
+        arguments?.let {
+             studentId = StudentDetailFragmentArgs.fromBundle(requireArguments()).studentID
+        }
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch()
+        viewModel.fetch(studentId)
 
         observeViewModel()
     }
     private fun observeViewModel() {
         viewModel.studentLiveData.observe(viewLifecycleOwner) {
-//            studentListAdapter.updateStudentList(it)
-            arrStudent = Student(
-                viewModel.studentLiveData.value?.id,viewModel.studentLiveData.value?.name,
-                viewModel.studentLiveData.value?.dob,viewModel.studentLiveData.value?.phone,
-            viewModel.studentLiveData.value?.photoURL)
-            editID.setText(arrStudent.id)
-            editName.setText(arrStudent.name)
-            editDOB.setText(arrStudent.dob)
-            editPhone.setText(arrStudent.phone)
+            val student = viewModel.studentLiveData.value
+            student?.let{
+                imageStudentDetail.loadImage(it.photoURL, progressLoadDetailStudent)
+                editID.setText(it.id)
+                editName.setText(it.name)
+                editPhone.setText(it.phone)
+                editDOB.setText(it.dob)
+            }
         }
     }
 }

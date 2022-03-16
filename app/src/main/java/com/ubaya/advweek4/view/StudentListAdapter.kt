@@ -7,6 +7,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ubaya.advweek4.R
 import com.ubaya.advweek4.model.Student
+import com.ubaya.advweek4.util.loadImage
 import kotlinx.android.synthetic.main.student_list_item.view.*
 
 class StudentListAdapter (val studentList: ArrayList<Student>) : RecyclerView
@@ -21,13 +22,15 @@ class StudentListAdapter (val studentList: ArrayList<Student>) : RecyclerView
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         val student = studentList[position]
+        val studentId = student.id
         with (holder.view) {
             textID.text = student.id
             textName.text = student.name
             buttonDetail.setOnClickListener {
-                val action = StudentListFragmentDirections.actionStudentDetail()
+                val action = StudentListFragmentDirections.actionStudentDetail(studentId)
                 Navigation.findNavController(it).navigate(action)
             }
+            imageStudentPhoto.loadImage(student.photoURL, progressLoadingStudentPhoto)
         }
     }
 
